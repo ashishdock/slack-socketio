@@ -1,4 +1,12 @@
-const socket = io('http://localhost:9000'); // the / endpoint
+const user = prompt('What is your username?');
+console.log(user);
+
+// const socket = io('http://localhost:9000'); // the / endpoint
+const socket = io('http://localhost:9000', {
+  query: {
+    username: user.toString(),
+  },
+});
 let nsSocket;
 
 // Listen for nsList, which is a list of all the namespaces
@@ -17,6 +25,7 @@ socket.on('nsList', (nsData) => {
     elem.addEventListener('click', (e) => {
       const nsEndpoint = elem.getAttribute('ns');
       console.log(`${nsEndpoint} I should go to now`);
+      joinNs(nsEndpoint.replace('/', ''));
     });
   });
 
